@@ -137,5 +137,34 @@ $(document).on("click", "#viewNote", function() {
 
 // Whenever someone clicks add note button
 $(document).on("click", "#saveArt", function() {
-  //$set save status to true and turn button green
+  // Grab the id associated with the article from the submit button
+  var thisId = $(this).attr("article-id");
+
+  // Run a POST request to change the note, using what's entered in the inputs
+  $.ajax({
+    method: "POST",
+    url: "/articles/" + thisId,
+    data: {saved: true}
+  })
+    // With that done
+    .then(function(data) {
+      // Log the response
+      console.log(data);
+    });
+});
+
+// Whenever someone clicks add note button
+$(document).on("click", "#scrapeNew", function() {
+  // Run a POST request to change the note, using what's entered in the inputs
+  $.ajax({
+    method: "GET",
+    url: "/scrape",
+  })
+    // With that done
+    .then(function(data) {
+      // Log the response
+      console.log(data);
+      $("#articles").empty();
+      window.location.href = "/";
+    });
 });
